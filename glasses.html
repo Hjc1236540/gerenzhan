@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>眼镜商品展示</title>
+    <style>
+        /* 优化基础样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        /* 页面标题 */
+        .page-header {
+            text-align: center;
+            padding: 2rem 0;
+            background: white;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .page-header h1 {
+            margin: 0;
+            color: #333;
+            font-size: 2rem;
+        }
+
+        /* 优化筛选区域 */
+        .filters {
+            padding: 1.5rem;
+            background: #fff;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .filter-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-group h4 {
+            margin: 0 0 1rem 0;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-option {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .filter-option:hover {
+            background: #f3f4f6;
+        }
+
+        .filter-option.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        /* 优化商品卡片 */
+        .product-card {
+            transition: transform 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .product-info h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* 商品分类导航 */
+        .category-nav {
+            background: white;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .category-list {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .category-item {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .category-item.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* 商品展示区域 */
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .price {
+            color: #ef4444;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .quantity-control button {
+            padding: 0.25rem 0.5rem;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+        }
+
+        .quantity-control input {
+            width: 50px;
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 0.25rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 0.5rem;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* 购物车图标 */
+        .cart-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ef4444;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        /* 分页样式 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 30px 0;
+            padding: 20px 0;
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: 8px;
+        }
+
+        .page-number {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .page-number:hover {
+            background: #f3f4f6;
+        }
+
+        .page-number.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .page-btn {
+            padding: 8px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <!-- 添加页面标题 -->
+    <div class="page-header">
+        <h1>明亮眼镜 - 专业配镜中心</h1>
+    </div>
+
+    <!-- 购物车图标 -->
+    <div class="cart-icon" onclick="window.location.href='index.html#cart'">
+        🛒
+        <span class="cart-count">0</span>
+    </div>
+
+    <!-- 分类导航 -->
+    <nav class="category-nav">
+        <div class="category-list">
+            <div class="category-item active" data-category="all">全部</div>
+            <div class="category-item" data-category="optical">近视眼镜</div>
+            <div class="category-item" data-category="sun">太阳镜</div>
+            <div class="category-item" data-category="reading">老花眼镜</div>
+            <div class="category-item" data-category="kids">儿童眼镜</div>
+        </div>
+    </nav>
+
+    <!-- 修改筛选区域 -->
+    <div class="filters">
+        <!-- 品牌筛选 -->
+        <div class="filter-group">
+            <h4>品牌选择</h4>
+            <div class="filter-options" id="brandFilters">
+                <div class="filter-option active" data-brand="all">全部品牌</div>
+                <div class="filter-option" data-brand="rayban">雷朋 Ray-Ban</div>
+                <div class="filter-option" data-brand="oakley">欧克利 Oakley</div>
+                <div class="filter-option" data-brand="gucci">古驰 Gucci</div>
+                <div class="filter-option" data-brand="prada">普拉达 Prada</div>
+                <div class="filter-option" data-brand="dior">迪奥 Dior</div>
+                <div class="filter-option" data-brand="tomford">汤姆·福特 Tom Ford</div>
+                <div class="filter-option" data-brand="armani">阿玛尼 Armani</div>
+                <div class="filter-option" data-brand="zeiss">蔡司 ZEISS</div>
+                <div class="filter-option" data-brand="essilor">依视路 Essilor</div>
+                <div class="filter-option" data-brand="bolon">暴龙 BOLON</div>
+                <div class="filter-option" data-brand="hoya">豪雅 HOYA</div>
+            </div>
+        </div>
+
+        <!-- 价格筛选 -->
+        <div class="filter-group">
+            <h4>价格区间</h4>
+            <div class="filter-options">
+                <div class="filter-option active">全部</div>
+                <div class="filter-option">0-200元</div>
+                <div class="filter-option">201-500元</div>
+                <div class="filter-option">501-1000元</div>
+                <div class="filter-option">1000元以上</div>
+            </div>
+        </div>
+
+        <!-- 度数选择 -->
+        <div class="filter-group">
+            <h4>度数选择</h4>
+            <div class="filter-options" id="degreeFilters">
+                <div class="filter-option active" data-degree="all">全部</div>
+                <div class="filter-option" data-degree="0">无度数</div>
+                <div class="filter-option" data-degree="light">轻度(0-300度)</div>
+                <div class="filter-option" data-degree="medium">中度(300-600度)</div>
+                <div class="filter-option" data-degree="high">高度(600度以上)</div>
+                <div class="filter-option" data-degree="progressive">渐进片</div>
+                <div class="filter-option" data-degree="reading">老花镜片</div>
+                <div class="filter-option" data-degree="children">儿童镜片</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 商品展示区域 -->
+    <div class="products-container"></div>
+
+    <!-- 添加分页 -->
+    <div class="pagination">
+        <button class="page-btn" onclick="changePage('prev')">上一页</button>
+        <div class="page-numbers"></div>
+        <button class="page-btn" onclick="changePage('next')">下一页</button>
+    </div>
+
+    <script>
+        // 示例商品数据
+        const products = [
+            {
+                id: 1,
+                name: 'Ray-Ban 经典飞行员墨镜',
+                price: 1299,
+                category: 'sun',
+                brand: 'rayban',
+                degree: '0',
+                image: 'path/to/rayban1.jpg',
+                description: '经典飞行员款式，金属框架，优质镜片'
+            },
+            {
+                id: 3,
+                name: '蔡司防蓝光镜片近视眼镜',
+                price: 2499,
+                category: 'optical',
+                brand: 'zeiss',
+                degree: 'medium',
+                image: 'path/to/zeiss1.jpg',
+                description: '蔡司镜片，防蓝光涂层，超清晰视觉体验'
+            },
+            {
+                id: 4,
+                name: '暴龙偏光太阳镜',
+                price: 799,
+                category: 'sun',
+                brand: 'bolon',
+                image: 'path/to/bolon1.jpg',
+                description: '时尚设计，高清偏光镜片，有效防眩光'
+            },
+            {
+                id: 5,
+                name: '依视路渐进多焦点镜片',
+                price: 3299,
+                category: 'optical',
+                brand: 'essilor',
+                image: 'path/to/essilor1.jpg',
+                description: '法国依视路高端渐进片，远近两用'
+            },
+            {
+                id: 6,
+                name: '阿玛尼商务眼镜框',
+                price: 1899,
+                category: 'optical',
+                brand: 'armani',
+                image: 'path/to/armani1.jpg',
+                description: '商务简约风格，钛合金材质，轻盈舒适'
+            },
+            {
+                id: 7,
+                name: '豪雅防蓝光电竞眼镜',
+                price: 1599,
+                category: 'optical',
+                brand: 'hoya',
+                image: 'path/to/hoya1.jpg',
+                description: '专业电竞镜片，有效阻隔蓝光，减少眼疲劳'
+            },
+            {
+                id: 8,
+                name: '卡地亚金框眼镜',
+                price: 4999,
+                category: 'optical',
+                brand: 'cartier',
+                image: 'path/to/cartier1.jpg',
+                description: '18K金镀层，奢华品质，尊贵典雅'
+            },
+            {
+                id: 9,
+                name: '范思哲时尚墨镜',
+                price: 2199,
+                category: 'sun',
+                brand: 'versace',
+                image: 'path/to/versace1.jpg',
+                description: '意大利设计，美杜莎标志，彰显个性'
+            }
+            // 可以继续添加更多商品...
+        ];
+
+        // 更新购物车显示
+        function updateCartDisplay() {
+            const cartCount = document.querySelector('.cart-count');
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalQuantity;
+        }
+
+        // 分页相关变量
+        let currentPage = 1;
+        const itemsPerPage = 8; // 每页显示的商品数量
+
+        // 更新分页显示
+        function updatePagination(filteredProducts) {
+            const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+            const pageNumbers = document.querySelector('.page-numbers');
+            pageNumbers.innerHTML = '';
+
+            // 生成页码按钮
+            for (let i = 1; i <= totalPages; i++) {
+                pageNumbers.innerHTML += `
+                    <div class="page-number ${i === currentPage ? 'active' : ''}" 
+                         onclick="goToPage(${i})">
+                        ${i}
+                    </div>
+                `;
+            }
+
+            // 更新上一页/下一页按钮状态
+            document.querySelector('button[onclick="changePage(\'prev\')"]')
+                .disabled = currentPage === 1;
+            document.querySelector('button[onclick="changePage(\'next\')"]')
+                .disabled = currentPage === totalPages;
+        }
+
+        // 跳转到指定页
+        function goToPage(page) {
+            currentPage = page;
+            const filteredProducts = getFilteredProducts();
+            renderProducts(filteredProducts);
+            updatePagination(filteredProducts);
+        }
+
+        // 切换页面
+        function changePage(direction) {
+            const filteredProducts = getFilteredProducts();
+            const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+            
+            if (direction === 'prev' && currentPage > 1) {
+                currentPage--;
+            } else if (direction === 'next' && currentPage < totalPages) {
+                currentPage++;
+            }
+            
+            renderProducts(filteredProducts);
+            updatePagination(filteredProducts);
+        }
+
+        // 获取当前筛选条件下的商品
+        function getFilteredProducts() {
+            let filteredProducts = [...products];
+            
+            // 应用分类筛选
+            const activeCategory = document.querySelector('.category-item.active').dataset.category;
+            if (activeCategory !== 'all') {
+                filteredProducts = filteredProducts.filter(p => p.category === activeCategory);
+            }
+            
+            // 应用品牌筛选
+            const activeBrand = document.querySelector('#brandFilters .filter-option.active').dataset.brand;
+            if (activeBrand !== 'all') {
+                filteredProducts = filteredProducts.filter(p => p.brand === activeBrand);
+            }
+            
+            // 应用价格筛选
+            const activePriceRange = document.querySelector('.filter-group:nth-child(2) .filter-option.active').textContent;
+            if (activePriceRange !== '全部') {
+                const ranges = {
+                    '0-200元': p => p.price <= 200,
+                    '201-500元': p => p.price > 200 && p.price <= 500,
+                    '501-1000元': p => p.price > 500 && p.price <= 1000,
+                    '1000元以上': p => p.price > 1000
+                };
+                filteredProducts = filteredProducts.filter(ranges[activePriceRange]);
+            }
+
+            // 应用度数筛选
+            const activeDegree = document.querySelector('#degreeFilters .filter-option.active').dataset.degree;
+            if (activeDegree !== 'all') {
+                filteredProducts = filteredProducts.filter(p => p.degree === activeDegree);
+            }
+            
+            return filteredProducts;
+        }
+
+        // 修改渲染商品函数
+        function renderProducts(products) {
+            const container = document.querySelector('.products-container');
+            // 计算当前页的商品
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageProducts = products.slice(start, end);
+            
+            container.innerHTML = pageProducts.map(product => `
+                <div class="product-card">
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <p class="price">¥${product.price.toFixed(2)}</p>
+                        <div class="quantity-control">
+                            <button onclick="changeQuantity(${product.id}, -1)">-</button>
+                            <input type="number" id="quantity-${product.id}" value="1" min="1">
+                            <button onclick="changeQuantity(${product.id}, 1)">+</button>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">加入购物车</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // 更新分页
+            updatePagination(products);
+        }
+
+        // 数量控制
+        function changeQuantity(productId, change) {
+            const input = document.getElementById(`quantity-${productId}`);
+            const newValue = Math.max(1, parseInt(input.value) + change);
+            input.value = newValue;
+        }
+
+        // 添加到购物车
+        function addToCart(productId) {
+            try {
+                const quantity = parseInt(document.getElementById(`quantity-${productId}`).value);
+                const product = products.find(p => p.id === productId);
+                
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                
+                const existingItem = cart.find(item => item.id === productId);
+                if (existingItem) {
+                    existingItem.quantity += quantity;
+                } else {
+                    cart.push({
+                        id: productId,
+                        name: product.name,
+                        price: product.price,
+                        quantity: quantity,
+                        selected: false
+                    });
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartDisplay();
+                alert('已添加到购物车！');
+            } catch (error) {
+                console.error('添加到购物车失败:', error);
+                alert('添加失败，请重试');
+            }
+        }
+
+        // 监听 localStorage 变化
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'cart') {
+                updateCartDisplay();
+            }
+        });
+
+        // 添加URL参数处理函数
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // 修改页面加载初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 检查URL参数中是否有category
+            const categoryFromUrl = getUrlParameter('category');
+            if (categoryFromUrl) {
+                // 找到对应的分类按钮
+                const categoryButton = document.querySelector(`.category-item[data-category="${categoryFromUrl}"]`);
+                if (categoryButton) {
+                    // 移除所有active类
+                    document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
+                    // 添加active类到目标按钮
+                    categoryButton.classList.add('active');
+                    // 筛选并显示对应分类的商品
+                    const filteredProducts = products.filter(p => p.category === categoryFromUrl);
+                    renderProducts(filteredProducts);
+                    // 滚动到分类导航栏位置
+                    const categoryNav = document.querySelector('.category-nav');
+                    if (categoryNav) {
+                        categoryNav.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            } else {
+                // 默认显示所有商品
+                renderProducts(products);
+            }
+            updateCartDisplay();
+        });
+
+        // 修改筛选事件处理
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                currentPage = 1; // 重置页码
+                
+                const category = item.dataset.category;
+                const filteredProducts = category === 'all' ? 
+                    products : 
+                    products.filter(p => p.category === category);
+                
+                renderProducts(filteredProducts);
+            });
+        });
+
+        // 价格筛选
+        document.querySelectorAll('.filter-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.filter-option').forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+                
+                const priceRange = option.textContent;
+                let filteredProducts = [...products];
+                
+                if (priceRange !== '全部') {
+                    const ranges = {
+                        '0-200元': p => p.price <= 200,
+                        '201-500元': p => p.price > 200 && p.price <= 500,
+                        '501-1000元': p => p.price > 500 && p.price <= 1000,
+                        '1000元以上': p => p.price > 1000
+                    };
+                    filteredProducts = filteredProducts.filter(ranges[priceRange]);
+                }
+                
+                renderProducts(filteredProducts);
+            });
+        });
+
+        // 添加品牌筛选功能
+        document.querySelectorAll('#brandFilters .filter-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('#brandFilters .filter-option')
+                    .forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+                
+                const brand = option.dataset.brand;
+                let filteredProducts = products;
+                
+                // 应用品牌筛选
+                if (brand !== 'all') {
+                    filteredProducts = filteredProducts.filter(p => p.brand === brand);
+                }
+                
+                // 应用现有的分类和价格筛选
+                const activeCategory = document.querySelector('.category-item.active').dataset.category;
+                if (activeCategory !== 'all') {
+                    filteredProducts = filteredProducts.filter(p => p.category === activeCategory);
+                }
+                
+                const activePriceRange = document.querySelector('.filter-group:nth-child(2) .filter-option.active').textContent;
+                if (activePriceRange !== '全部') {
+                    const ranges = {
+                        '0-200元': p => p.price <= 200,
+                        '201-500元': p => p.price > 200 && p.price <= 500,
+                        '501-1000元': p => p.price > 500 && p.price <= 1000,
+                        '1000元以上': p => p.price > 1000
+                    };
+                    filteredProducts = filteredProducts.filter(ranges[activePriceRange]);
+                }
+                
+                renderProducts(filteredProducts);
+            });
+        });
+
+        // 添加度数筛选事件监听
+        document.querySelectorAll('#degreeFilters .filter-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('#degreeFilters .filter-option')
+                    .forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+                currentPage = 1; // 重置页码
+                
+                const filteredProducts = getFilteredProducts();
+                renderProducts(filteredProducts);
+            });
+        });
+    </script>
+</body>
+</html> 

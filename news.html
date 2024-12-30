@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻资讯 - 明亮眼镜</title>
+    <style>
+        /* 基础样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* 导航栏样式 */
+        .top-nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #2563eb;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(135deg, #1a365d, #2563eb);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        /* 新闻内容区域 */
+        .news-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* 新闻分类导航 */
+        .news-nav {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 15px;
+        }
+
+        .news-nav a {
+            color: #666;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .news-nav a:hover,
+        .news-nav a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* 新闻列表 */
+        .news-list {
+            display: grid;
+            gap: 30px;
+        }
+
+        .news-item {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .news-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 20px;
+        }
+
+        .news-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .news-title {
+            font-size: 1.2rem;
+            margin: 0 0 10px;
+            color: #1a365d;
+        }
+
+        .news-excerpt {
+            color: #666;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* 分页控件 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .pagination button {
+            padding: 8px 16px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .pagination button:hover {
+            background: #f3f4f6;
+        }
+
+        .pagination button.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        /* 页脚样式 */
+        .footer {
+            background: #1a365d;
+            color: white;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">明亮眼镜</a>
+            <div class="nav-right">
+                <a href="index.html">返回首页</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <header class="page-header">
+        <h1>新闻资讯</h1>
+    </header>
+
+    <!-- 新闻内容区域 -->
+    <div class="news-container">
+        <!-- 新闻分类导航 -->
+        <nav class="news-nav">
+            <a href="#" class="active">全部新闻</a>
+            <a href="#">公司动态</a>
+            <a href="#">行业资讯</a>
+            <a href="#">产品信息</a>
+            <a href="#">活动公告</a>
+        </nav>
+
+        <!-- 新闻列表 -->
+        <div class="news-list">
+            <!-- 新闻项目 -->
+            <article class="news-item">
+                <img src="path/to/news1.jpg" alt="新店开业" class="news-image">
+                <div class="news-content">
+                    <div class="news-date">2024-03-15</div>
+                    <h3 class="news-title">明亮眼镜深圳旗舰店盛大开业</h3>
+                    <p class="news-excerpt">明亮眼镜深圳旗舰店于3月15日盛大开业，这是我们在华南地区的第20家门店。开业当天，我们为顾客准备了丰富的开业优惠活动...</p>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <img src="path/to/news2.jpg" alt="新品发布" class="news-image">
+                <div class="news-content">
+                    <div class="news-date">2024-03-10</div>
+                    <h3 class="news-title">2024春季新品系列发布</h3>
+                    <p class="news-excerpt">明亮眼镜2024春季新品系列正式发布，本次新品包括多款轻奢眼镜框架和高端定制镜片，采用最新科技和工艺...</p>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <img src="path/to/news3.jpg" alt="技术创新" class="news-image">
+                <div class="news-content">
+                    <div class="news-date">2024-03-05</div>
+                    <h3 class="news-title">引入AI智能验光系统</h3>
+                    <p class="news-excerpt">为提供更精准的验光服务，明亮眼镜率先在行业内引入AI智能验光系统，该系统能够提供更准确的验光数据...</p>
+                </div>
+            </article>
+        </div>
+
+        <!-- 分页控件 -->
+        <div class="pagination">
+            <button disabled>上一页</button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>下一页</button>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2024 明亮眼镜 版权所有</p>
+            <p>服务热线：400-123-4567</p>
+        </div>
+    </footer>
+
+    <script>
+        // 新闻分类切换
+        document.querySelectorAll('.news-nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelector('.news-nav a.active').classList.remove('active');
+                link.classList.add('active');
+                // 这里可以添加加载对应分类新闻的逻辑
+            });
+        });
+
+        // 分页功能
+        document.querySelectorAll('.pagination button').forEach(button => {
+            if (!button.disabled && !button.classList.contains('active')) {
+                button.addEventListener('click', () => {
+                    document.querySelector('.pagination button.active').classList.remove('active');
+                    button.classList.add('active');
+                    // 这里可以添加加载对应页面内容的逻辑
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

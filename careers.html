@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>招贤纳士 - 明亮眼镜</title>
+    <style>
+        /* 基础样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* 导航栏样式 */
+        .top-nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #2563eb;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(135deg, #1a365d, #2563eb);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .page-header p {
+            margin: 10px 0 0;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* 内容区域 */
+        .content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* 公司文化部分 */
+        .culture-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .culture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .culture-item {
+            padding: 30px;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .culture-item h3 {
+            color: #2563eb;
+            margin-bottom: 15px;
+        }
+
+        /* 职位列表 */
+        .jobs-section {
+            margin-top: 60px;
+        }
+
+        .job-filters {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .job-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .job-title {
+            font-size: 1.2rem;
+            color: #1a365d;
+            margin: 0;
+        }
+
+        .job-location {
+            color: #666;
+        }
+
+        .job-details {
+            margin: 15px 0;
+            padding: 15px 0;
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .job-requirements {
+            margin: 15px 0;
+        }
+
+        .apply-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .apply-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* 页脚样式 */
+        .footer {
+            background: #1a365d;
+            color: white;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">明亮眼镜</a>
+            <div class="nav-right">
+                <a href="index.html">返回首页</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <header class="page-header">
+        <h1>招贤纳士</h1>
+        <p>加入明亮眼镜，共创美好未来</p>
+    </header>
+
+    <div class="content">
+        <!-- 公司文化 -->
+        <section class="culture-section">
+            <h2>公司文化</h2>
+            <div class="culture-grid">
+                <div class="culture-item">
+                    <h3>创新精神</h3>
+                    <p>我们鼓励创新思维，追求技术进步，为客户提供更好的产品和服务</p>
+                </div>
+                <div class="culture-item">
+                    <h3>团队协作</h3>
+                    <p>相互信任，共同成长，打造积极向上的工作氛围</p>
+                </div>
+                <div class="culture-item">
+                    <h3>职业发展</h3>
+                    <p>提供完善的培训体系和晋升机制，助力员工实现职业理想</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 职位列表 -->
+        <section class="jobs-section">
+            <h2>最新职位</h2>
+            <div class="job-filters">
+                <button class="filter-btn active">全部职位</button>
+                <button class="filter-btn">验光师</button>
+                <button class="filter-btn">销售顾问</button>
+                <button class="filter-btn">技术研发</button>
+                <button class="filter-btn">运营管理</button>
+            </div>
+
+            <div class="job-list">
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">高级验光师</h3>
+                        <span class="job-location">北京 · 全职</span>
+                    </div>
+                    <div class="job-details">
+                        <p><strong>薪资范围：</strong> 8k-15k</p>
+                        <p><strong>工作经验：</strong> 3年以上</p>
+                    </div>
+                    <div class="job-requirements">
+                        <p>岗位要求：</p>
+                        <ul>
+                            <li>具备验光师资格证书</li>
+                            <li>熟练掌握各类验光设备的操作</li>
+                            <li>具有良好的沟通能力和服务意识</li>
+                        </ul>
+                    </div>
+                    <a href="#" class="apply-btn">立即申请</a>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">销售顾问</h3>
+                        <span class="job-location">上海 · 全职</span>
+                    </div>
+                    <div class="job-details">
+                        <p><strong>薪资范围：</strong> 6k-12k</p>
+                        <p><strong>工作经验：</strong> 1年以上</p>
+                    </div>
+                    <div class="job-requirements">
+                        <p>岗位要求：</p>
+                        <ul>
+                            <li>热爱销售工作，有较强的学习能力</li>
+                            <li>具备良好的沟通能力和团队协作精神</li>
+                            <li>有眼镜行业经验者优先</li>
+                        </ul>
+                    </div>
+                    <a href="#" class="apply-btn">立即申请</a>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">产品经理</h3>
+                        <span class="job-location">深圳 · 全职</span>
+                    </div>
+                    <div class="job-details">
+                        <p><strong>薪资范围：</strong> 15k-25k</p>
+                        <p><strong>工作经验：</strong> 5年以上</p>
+                    </div>
+                    <div class="job-requirements">
+                        <p>岗位要求：</p>
+                        <ul>
+                            <li>具有产品规划和管理经验</li>
+                            <li>熟悉眼镜行业产品特点和市场趋势</li>
+                            <li>具备优秀的项目管理能力</li>
+                        </ul>
+                    </div>
+                    <a href="#" class="apply-btn">立即申请</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2024 明亮眼镜 版权所有</p>
+            <p>服务热线：400-123-4567</p>
+        </div>
+    </footer>
+
+    <script>
+        // 职位筛选功能
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelector('.filter-btn.active').classList.remove('active');
+                btn.classList.add('active');
+                // 这里可以添加筛选职位的逻辑
+            });
+        });
+
+        // 职位申请按钮点击事件
+        document.querySelectorAll('.apply-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                // 这里可以添加职位申请的逻辑
+                alert('申请功能开发中，请稍后再试！');
+            });
+        });
+    </script>
+</body>
+</html> 

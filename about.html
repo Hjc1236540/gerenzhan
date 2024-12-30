@@ -1,0 +1,468 @@
+<head>
+    <!-- 添加网站图标 -->
+    <link rel="icon" href="path/to/favicon.ico" type="image/x-icon">
+    <style>
+        /* 添加返回首页按钮样式 */
+        .back-to-home {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #2563eb;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+
+        .back-to-home:hover {
+            transform: translateY(-3px);
+        }
+
+        /* 优化页面头部样式 */
+        .header {
+            background: linear-gradient(135deg, #1a365d, #2563eb);
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 添加页面底部样式 */
+        .footer {
+            background: #1a365d;
+            color: white;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* 通用样式优化 */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #1a365d;
+            margin: 0;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #2563eb;
+        }
+
+        /* 公司介绍部分样式优化 */
+        .company-section {
+            padding: 60px 0;
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .company-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #2563eb10, #2563eb05);
+            border-radius: 50%;
+            transform: translate(150px, -150px);
+        }
+
+        .company-info {
+            display: flex;
+            gap: 40px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 发展历程样式优化 */
+        .timeline-item {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
+        }
+
+        .timeline-item .year {
+            flex: 0 0 100px;
+            font-weight: bold;
+            color: #2563eb;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .timeline-item .event h4 {
+            color: #1a365d;
+            margin: 0 0 10px;
+            font-size: 1.2rem;
+        }
+
+        .timeline-item .event p {
+            color: #666;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* 联系方式样式优化 */
+        .contact-card {
+            padding: 30px;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .contact-card .icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            background: #f0f7ff;
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+        }
+
+        .contact-card h3 {
+            color: #2563eb;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .contact-card p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* 响应式优化 */
+        @media (max-width: 768px) {
+            .company-info {
+                flex-direction: column;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .timeline-item .year {
+                flex: none;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 添加页面顶部导航栏 -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="logo">
+                    <img src="path/to/logo.png" alt="明亮眼镜">
+                    <span>明亮眼镜</span>
+                </a>
+            </div>
+            <div class="nav-right">
+                <a href="index.html">首页</a>
+                <a href="glasses.html">配眼镜</a>
+                <a href="glasses.html?category=sun">太阳镜</a>
+                <a href="glasses.html?category=optical">防蓝光眼镜</a>
+                <a href="glasses.html?category=reading">老花眼镜</a>
+                <a href="glasses.html?category=kids">儿童眼镜</a>
+            </div>
+        </div>
+    </nav>
+
+    <style>
+        /* 导航栏样式 */
+        .top-nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #2563eb;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-right a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-right a:hover {
+            color: #2563eb;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .nav-right {
+                display: none;
+            }
+
+            .nav-container {
+                justify-content: center;
+            }
+        }
+    </style>
+
+    <!-- 添加返回首页按钮 -->
+    <a href="index.html" class="back-to-home">返回首页</a>
+
+    <!-- 公司介绍部分 -->
+    <section class="company-section">
+        <div class="section-title">
+            <h2>公司介绍</h2>
+        </div>
+        <div class="content">
+            <div class="company-info">
+                <div class="info-text">
+                    <p>明亮眼镜创立于2000年，是中国领先的专业眼镜连锁企业。我们始终秉持"匠心品质，用心服务"的理念，致力于为每一位顾客提供专业的验光配镜服务和优质的眼镜产品。</p>
+                    <p>公司拥有超过1000名专业验光师，全部经过国家认证。引进世界顶级验光设备，与蔡司、依视路等国际品牌建立长期战略合作关系。</p>
+                    <p>目前，明亮眼镜在全国拥有超过200家直营门店，覆盖一二线城市核心商圈，年服务顾客超过100万人次。</p>
+                </div>
+                <div class="company-stats">
+                    <div class="stat-item">
+                        <span class="number">200+</span>
+                        <span class="label">直营门店</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="number">1000+</span>
+                        <span class="label">专业验光师</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="number">100万+</span>
+                        <span class="label">年服务人次</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 发展历程部分 -->
+    <section class="history-section">
+        <div class="section-title">
+            <h2>发展历程</h2>
+        </div>
+        <div class="content">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="year">2000年</div>
+                    <div class="event">
+                        <h4>品牌创立</h4>
+                        <p>北京第一家门店开业，开启专业验光配镜服务</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2005年</div>
+                    <div class="event">
+                        <h4>快速发展</h4>
+                        <p>北京地区门店突破10家，建立专业验光师培训体系</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2010年</div>
+                    <div class="event">
+                        <h4>品质升级</h4>
+                        <p>引入蔡司等国际一线品牌，开设高端定制服务</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2015年</div>
+                    <div class="event">
+                        <h4>全国扩张</h4>
+                        <p>门店覆盖全国30个城市，获得"年度最佳眼镜连锁品牌"称号</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2020年</div>
+                    <div class="event">
+                        <h4>数字化转型</h4>
+                        <p>上线线上商城，实现线上线下一体化服务</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2024年</div>
+                    <div class="event">
+                        <h4>持续创新</h4>
+                        <p>全国门店突破200家，推出AI智能验光服务</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系方式部分 -->
+    <section class="contact-section">
+        <div class="section-title">
+            <h2>联系我们</h2>
+        </div>
+        <div class="content">
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="icon">📞</div>
+                    <h3>客服热线</h3>
+                    <p>400-123-4567</p>
+                    <p>服务时间：08:00-24:00</p>
+                </div>
+                <div class="contact-card">
+                    <div class="icon">💼</div>
+                    <h3>商务合作</h3>
+                    <p>品牌合作：brand@mingliangeyewear.com</p>
+                    <p>市场合作：market@mingliangeyewear.com</p>
+                    <p>加盟咨询：join@mingliangeyewear.com</p>
+                </div>
+                <div class="contact-card">
+                    <div class="icon">🏢</div>
+                    <h3>总部地址</h3>
+                    <p>北京市朝阳区建国路88号明亮大厦</p>
+                    <p>邮编：100022</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 添加页面底部 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2024 明亮眼镜 版权所有</p>
+            <p>服务热线：400-123-4567</p>
+        </div>
+    </footer>
+
+    <!-- 修改地图初始化代码 -->
+    <script>
+        window.onload = function() {
+            try {
+                initMap();
+            } catch (error) {
+                console.error('地图加载失败:', error);
+                document.querySelector('.store-map').innerHTML = 
+                    '<p style="text-align: center; padding: 20px;">地图加载失败，请稍后重试</p>';
+            }
+        }
+
+        function initMap() {
+            var map = new BMap.Map("map");
+            var point = new BMap.Point(116.404, 39.915);
+            map.centerAndZoom(point, 12);
+            map.enableScrollWheelZoom();
+            
+            // 添加地图控件
+            map.addControl(new BMap.NavigationControl());
+            map.addControl(new BMap.ScaleControl());
+            
+            // 添加门店标记
+            var stores = [
+                {name: "北京总店", point: new BMap.Point(116.450, 39.920)},
+                {name: "西单店", point: new BMap.Point(116.380, 39.910)},
+                {name: "三里屯店", point: new BMap.Point(116.455, 39.935)}
+            ];
+            
+            stores.forEach(store => {
+                var marker = new BMap.Marker(store.point);
+                map.addOverlay(marker);
+                var label = new BMap.Label(store.name, {offset: new BMap.Size(20, -10)});
+                marker.setLabel(label);
+            });
+        }
+    </script>
+</body> 
